@@ -14,8 +14,6 @@ Contratos públicos com objeto vago ou fornecedores sancionados são sinais clá
   - 🟠 **MÉDIO:** atenção necessária
   - 🟢 **BAIXO:** objeto claro e bem definido
 
-![Demonstração](docs/demo.png)
-
 ## Metodologia de análise de risco
 A classificação usa dois mecanismos:
 1. **Inteligência Artificial (Gemini 2.0 Flash):** análise semântica do objeto do contrato.
