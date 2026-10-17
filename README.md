@@ -1,66 +1,55 @@
-# 🛡️ GovAudit Pro - Auditoria de Contratos Públicos com IA
+# 🛡️ GovAudit Pro: Auditoria de Contratos Públicos com IA
 
-> Projeto desenvolvido exclusivamente para fins acadêmicos.
-> Os resultados não substituem auditorias oficiais.
+> Trabalho de Conclusão de Curso, Pós-graduação em Ciência de Dados e Machine Learning (UniCEUB).
+> Projeto acadêmico: os resultados não substituem auditorias oficiais.
 
-O **GovAudit Pro** é uma ferramenta desenvolvida para o Trabalho de Conclusão de Curso (TCC) que utiliza Inteligência Artificial (Google Gemini) e dados abertos para auditar contratos públicos federais em busca de riscos e irregularidades.
+## O problema
+Contratos públicos com objeto vago ou fornecedores sancionados são sinais clássicos de risco, mas verificar isso manualmente, contrato a contrato, não escala.
 
-## 🚀 Funcionalidades
+## O que a ferramenta faz
+- **🕵️ Análise de fornecedores:** verifica o CNPJ nas bases de sanções do governo (CEIS, CNEP e Acordos de Leniência).
+- **📊 Monitoramento de contratos:** busca contratos reais pela API do Portal da Transparência.
+- **🧠 Classificação de risco com LLM:** o Gemini 2.0 Flash lê o objeto do contrato e classifica o risco jurídico em:
+  - 🔴 **ALTO:** objetos vagos, genéricos ou suspeitos
+  - 🟠 **MÉDIO:** atenção necessária
+  - 🟢 **BAIXO:** objeto claro e bem definido
 
-* **🕵️ Análise de Fornecedores:** Verifica automaticamente o CNPJ de empresas em bases de sanções (CEIS, CNEP, Acordos de Leniência).
-* **📊 Monitoramento de Contratos:** Busca contratos reais via API do Portal da Transparência.
-* **🧠 IA Auditora:** Utiliza o modelo **Gemini 2.0 Flash** para ler o objeto do contrato e classificar o risco jurídico em:
-    * 🔴 **ALTO** (Objetos vagos, genéricos ou suspeitos)
-    * 🟠 **MÉDIO** (Atenção necessária)
-    * 🟢 **BAIXO** (Objeto claro e bem definido)
+![Demonstração](docs/demo.png)
 
-## 🧪 Metodologia de Análise de Risco
+## Metodologia de análise de risco
+A classificação usa dois mecanismos:
+1. **Inteligência Artificial (Gemini 2.0 Flash):** análise semântica do objeto do contrato.
+2. **Fallback heurístico:** se a IA não responder, regras baseadas no tamanho do texto e no uso de termos genéricos garantem uma classificação.
 
-A classificação de risco é realizada por dois mecanismos:
+## Resultados
+[Só se houver números reais: contratos analisados, distribuição de risco, 1–2 exemplos. Senão, apague esta seção.]
 
-1. **Inteligência Artificial (Gemini 2.0 Flash)**  
-   Analisa semanticamente o objeto do contrato.
+## Stack
+Python 3.9+ · Streamlit · Google Gemini API · API do Portal da Transparência
 
-2. **Fallback Heurístico**  
-   Caso a IA não responda, aplica regras baseadas em:
-   - Tamanho do texto
-   - Uso de termos genéricos
+## Como executar
 
-## 🛠️ Tecnologias Utilizadas
-
-* **Python 3.9+**
-* **Streamlit** (Interface Web)
-* **Google Gemini API** (Inteligência Artificial Generativa)
-* **API Portal da Transparência** (Dados Governamentais)
-
----
-
-## ⚙️ Como Rodar o Projeto
-
-Siga os passos abaixo para executar a aplicação em sua máquina.
-
-### 1. Clonar o Repositório
 ```bash
-git clone [https://github.com/LibanoJr/projeto_fio.git](https://github.com/LibanoJr/projeto_fio.git)
-cd projeto_fio
-
-### 2. Criar Ambiente Virtual
+git clone https://github.com/LibanoJr/govaudit-pro.git
+cd govaudit-pro
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-
-### 3. Instalar Dependências
+source venv/bin/activate      # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-### 4. Configurar Variáveis de Ambiente
-Crie um arquivo `.env` na raiz do projeto com:
+Crie um arquivo `.env` na raiz:
+
+```env
 PORTAL_KEY=sua_chave_portal_transparencia
 GEMINI_API_KEY=sua_chave_google_gemini
+```
 
-### 5. Executar a Aplicação
+Execute:
+
+```bash
 streamlit run app.py
+```
 
-## ⚠️ Limitações
-
-A ferramenta depende de dados públicos do Portal da Transparência,
-que podem sofrer atrasos, indisponibilidade ou ausência de registros.
+## Limitações
+- Depende da disponibilidade e da completude dos dados do Portal da Transparência.
+- A classificação do LLM não foi validada contra auditorias reais; serve como triagem, não como conclusão.
